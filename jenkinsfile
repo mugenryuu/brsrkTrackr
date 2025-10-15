@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        // Replace with your SonarQube server name as configured in Jenkins
-        SONARQUBE_ENV = 'SonarQubeServer'
+        SONARQUBE_ENV = 'sonar-scanner'
+    }
 
-        // Optional: your Node version if using nvm
-        // PATH = "$HOME/.nvm/versions/node/v18.17.0/bin:$PATH"
+    tools {
+            nodejs "node18"
     }
 
     stages {
