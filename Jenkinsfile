@@ -33,13 +33,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
+                /* groovylint-disable-next-line DuplicateStringLiteral */
                 withSonarQubeEnv('SonarQube') {
                     script {
                         def scannerHome = tool 'sonar-scanner'
                         sh "${scannerHome}/bin/sonar-scanner " +
-                           "-Dsonar.projectKey=brsrkTracker " +
-                           "-Dsonar.sources=. " +
-                           "-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
+                           '-Dsonar.projectKey=brsrkTracker ' +
+                           '-Dsonar.sources=. ' +
+                           '-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info'
                     }
                 }
             }
