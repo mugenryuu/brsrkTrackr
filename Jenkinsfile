@@ -6,7 +6,7 @@ pipeline {
     }
 
     tools {
-            nodejs "NodeJs"
+            nodejs 'node24'
     }
 
     stages {
@@ -33,9 +33,13 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                echo '🔹 Running SonarQube analysis...'
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
-                    sh 'sonar-scanner'
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=brsrkTracker \
+                        -Dsonar.sources=./src \
+                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                    '''
                 }
             }
         }
