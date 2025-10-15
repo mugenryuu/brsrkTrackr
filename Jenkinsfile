@@ -38,7 +38,7 @@ pipeline {
                         def scannerHome = tool 'sonar-scanner'
                         sh "${scannerHome}/bin/sonar-scanner " +
                            "-Dsonar.projectKey=brsrkTracker " +
-                           "-Dsonar.sources=./src " +
+                           "-Dsonar.sources=. " +
                            "-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
                     }
                 }
