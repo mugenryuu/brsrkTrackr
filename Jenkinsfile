@@ -33,13 +33,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv("${SONARQUBE_ENV}") {
-                    sh '''
-                        sonar-scanner \
-                        -Dsonar.projectKey=brsrkTracker \
-                        -Dsonar.sources=./src \
-                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-                    '''
+                withSonarQubeEnv('SonarQubeServer') {
+                    script {
+                        def scannerHome = tool 'sonar-scanner'
+                        sh "${scannerHome}/bin/sonar-scanner " +
+                           "-Dsonar.projectKey=brsrkTracker " +
+                           "-Dsonar.sources=./src " +
+                           "-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
+                    }
                 }
             }
         }
