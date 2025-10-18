@@ -1,22 +1,54 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
+import HomeScreen from './screens/HomeScreen';
+import WorkoutListScreen from './screens/WorkoutListScreen';
+import WorkoutScreen from './screens/WorkoutScreen';
+import SessionListScreen from './screens/SessionListScreen';
+import SessionScreen from './screens/SessionScreen';
+import ExercisesListScreen from './screens/ExercisesListScreen';
+import ExerciseScreen from './screens/ExerciseScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
-import ExercisesScreen from "./screens/ExercisesScreen"
+
+const WorkoutStack = createNativeStackNavigator();
+const SessionStack = createNativeStackNavigator();
+const ExercisesStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function WorkoutStackScreen() {
+  return (
+    <WorkoutStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
+      <WorkoutStack.Screen name="WorkoutListScreen" component={WorkoutListScreen} options={{ title: 'Workouts' }} />
+      <WorkoutStack.Screen name="WorkoutScreen" component={WorkoutScreen} options={{ title: 'Workout Details' }} />
+    </WorkoutStack.Navigator>
+  );
+}
+
+function SessionStackScreen() {
+  return (
+    <SessionStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
+      <SessionStack.Screen name="SessionListScreen" component={SessionListScreen} options={{ title: 'Sessions' }} />
+      <SessionStack.Screen name="SessionScreen" component={SessionScreen} options={{ title: 'Session Details' }} />
+    </SessionStack.Navigator>
+  );
+}
+
+function ExercisesStackScreen() {
+  return (
+    <ExercisesStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
+      <ExercisesStack.Screen name="ExercisesListScreen" component={ExercisesListScreen} options={{ title: 'Exercises' }} />
+      <ExercisesStack.Screen name="ExerciseScreen" component={ExerciseScreen} options={{ title: 'Exercise Details' }} />
+    </ExercisesStack.Navigator>
+  );
+}
 
 export default function App() {
   const Tab = createBottomTabNavigator();
-
-
-  const HomeScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Home</Text></View>;
-  const WorkoutsScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Workouts</Text></View>;
-  const SessionsScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Sessions</Text></View>;
-  const SettingsScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Settings</Text></View>;
-
-
 
   return (
     <NavigationContainer>
@@ -25,26 +57,24 @@ export default function App() {
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
-
             switch (route.name) {
               case 'Home': iconName = focused ? 'home' : 'home-outline'; break;
               case 'Workouts': iconName = focused ? 'barbell' : 'barbell-outline'; break;
               case 'Sessions': iconName = focused ? 'timer' : 'timer-outline'; break;
               case 'Exercises': iconName = focused ? 'list' : 'list-outline'; break;
-              case 'Settings': iconName = focused ? 'settings' : 'settings-outline'; break;
+              case 'Settings': iconName = focused ? 'construct' : 'construct-outline'; break;
             }
-
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#007AFF', // iOS blue
+          tabBarActiveTintColor: '#007AFF',
           tabBarInactiveTintColor: 'gray',
           tabBarStyle: { backgroundColor: 'white', borderTopWidth: 0.5, borderTopColor: '#ccc' },
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Workouts" component={WorkoutsScreen} />
-        <Tab.Screen name="Sessions" component={SessionsScreen} />
-        <Tab.Screen name="Exercises" component={ExercisesScreen} />
+        <Tab.Screen name="Workouts" component={WorkoutStackScreen} />
+        <Tab.Screen name="Sessions" component={SessionStackScreen} />
+        <Tab.Screen name="Exercises" component={ExercisesStackScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
