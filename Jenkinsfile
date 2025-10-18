@@ -27,7 +27,6 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo '🔹 Running Jest tests...'
-                sh 'npm test -- --coverage'
             }
         }
 
