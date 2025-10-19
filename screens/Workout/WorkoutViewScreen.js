@@ -1,4 +1,4 @@
- // screens/WorkoutViewScreen.js
+// screens/WorkoutViewScreen.js
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -29,7 +29,11 @@ export default function WorkoutViewScreen() {
   if (!selectedWorkout) return null;
 
   const startWorkout = () => {
-    // Future: Navigate to session screen
+    if (!selectedWorkout) {
+      Alert.alert("Error", "No workout selected.");
+      return;
+    }
+
     Alert.alert(
       "Start Workout",
       `Starting workout: ${selectedWorkout.name}`,
@@ -40,7 +44,7 @@ export default function WorkoutViewScreen() {
             navigation.navigate("SessionScreen", {
               workoutId: selectedWorkout.id,
               workoutName: selectedWorkout.name,
-              exercises: selectedWorkout.exercises,
+              exercises: selectedWorkout.exercises || [], // ✅ safe fallback
             }),
         },
       ]
