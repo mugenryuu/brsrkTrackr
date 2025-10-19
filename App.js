@@ -8,6 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen';
 import WorkoutListScreen from './screens/Workout/WorkoutListScreen';
 import WorkoutScreen from './screens/Workout/WorkoutScreen';
+import WorkoutFormScreen from './screens/Workout/WorkoutFormScreen';
+import WorkoutViewScreen from './screens/Workout/WorkoutViewScreen';
 import SessionListScreen from './screens/Session/SessionListScreen';
 import SessionScreen from './screens/Session/SessionScreen';
 import ExerciseListScreen from './screens/Exercise/ExerciseListScreen';
@@ -26,6 +28,8 @@ function WorkoutStackScreen() {
     <WorkoutStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
       <WorkoutStack.Screen name="WorkoutListScreen" component={WorkoutListScreen} options={{ title: 'Workouts' }} />
       <WorkoutStack.Screen name="WorkoutScreen" component={WorkoutScreen} options={{ title: 'Workout Details' }} />
+      <WorkoutStack.Screen name="WorkoutFormScreen" component={WorkoutFormScreen} options={{ headerShown: false }} />
+      <WorkoutStack.Screen name="WorkoutViewScreen" component={WorkoutViewScreen} options={{ title: "Workout Details" }} />
     </WorkoutStack.Navigator>
   );
 }
