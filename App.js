@@ -30,6 +30,7 @@ function WorkoutStackScreen() {
       <WorkoutStack.Screen name="WorkoutScreen" component={WorkoutScreen} options={{ title: 'Workout Details' }} />
       <WorkoutStack.Screen name="WorkoutFormScreen" component={WorkoutFormScreen} options={{ headerShown: false }} />
       <WorkoutStack.Screen name="WorkoutViewScreen" component={WorkoutViewScreen} options={{ title: "Workout Details" }} />
+      <WorkoutStack.Screen name="SessionScreen" component={SessionScreen} />
     </WorkoutStack.Navigator>
   );
 }
