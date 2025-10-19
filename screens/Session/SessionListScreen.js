@@ -46,11 +46,13 @@ export default function SessionListScreen() {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate("SessionScreen", { session: item })}
+      onPress={() => navigation.navigate("SessionScreen", { workout: item })}
     >
       <View>
-        <Text style={styles.title}>{item.workoutName}</Text>
-        <Text style={styles.date}>{item.date}</Text>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.date}>
+          {new Date(item.startTime).toLocaleString()}
+        </Text>
       </View>
       <TouchableOpacity onPress={() => deleteSession(item.id)}>
         <Text style={styles.delete}>Delete</Text>
