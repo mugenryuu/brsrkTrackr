@@ -9,12 +9,12 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WorkoutViewScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const { workout } = route.params || {};
-
   const [selectedWorkout, setSelectedWorkout] = useState(workout);
 
   useEffect(() => {
@@ -28,27 +28,35 @@ export default function WorkoutViewScreen() {
 
   if (!selectedWorkout) return null;
 
-  const startWorkout = () => {
-    if (!selectedWorkout) {
-      Alert.alert("Error", "No workout selected.");
-      return;
-    }
+  const startWorkout = async () => {
+    try {
+      // 1️⃣ Create session entry
+      const newSession = {
+        id: Date.now().toString(),
+        workoutId: selectedWorkout.id,
+        name: selectedWorkout.name,
+        startTime: new Date().toISOString(),
+        completed: false,
+        exercises: selectedWorkout.exercises || [],
+      };
 
-    Alert.alert(
-      "Start Workout",
-      `Starting workout: ${selectedWorkout.name}`,
-      [
-        {
-          text: "OK",
-          onPress: () =>
-            navigation.navigate("SessionScreen", {
-              workoutId: selectedWorkout.id,
-              workoutName: selectedWorkout.name,
-              exercises: selectedWorkout.exercises || [], // ✅ safe fallback
-            }),
-        },
-      ]
-    );
+      const storedSessions = await AsyncStorage.getItem("sessions");
+      const sessions = storedSessions ? JSON.parse(storedSessions) : [];
+
+      // Prevent duplicate session entries
+      const exists = sessions.find(
+        (s) => s.workoutId === selectedWorkout.id && !s.completed
+      );
+      if (!exists) sessions.push(newSession);
+
+      await AsyncStorage.setItem("sessions", JSON.stringify(sessions));
+
+      // 2️⃣ Navigate to SessionScreen
+      navigation.navigate("SessionScreen", { workout: selectedWorkout });
+    } catch (error) {
+      console.log("Error starting workout:", error);
+      Alert.alert("Error", "Failed to start workout.");
+    }
   };
 
   return (
