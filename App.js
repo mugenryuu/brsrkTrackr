@@ -1,15 +1,57 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
+import HomeScreen from './screens/HomeScreen';
+import WorkoutListScreen from './screens/Workout/WorkoutListScreen';
+import WorkoutScreen from './screens/Workout/WorkoutScreen';
+import SessionListScreen from './screens/Session/SessionListScreen';
+import SessionScreen from './screens/Session/SessionScreen';
+import ExerciseListScreen from './screens/Exercise/ExerciseListScreen';
+import ExerciseScreen from './screens/Exercise/ExerciseScreen';
+import ExerciseFormScreen from './screens/Exercise/ExerciseFormScreen';
+import SettingsScreen from './screens/SettingsScreen';
+
+
+const WorkoutStack = createNativeStackNavigator();
+const SessionStack = createNativeStackNavigator();
+const ExercisesStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function WorkoutStackScreen() {
+  return (
+    <WorkoutStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
+      <WorkoutStack.Screen name="WorkoutListScreen" component={WorkoutListScreen} options={{ title: 'Workouts' }} />
+      <WorkoutStack.Screen name="WorkoutScreen" component={WorkoutScreen} options={{ title: 'Workout Details' }} />
+    </WorkoutStack.Navigator>
+  );
+}
+
+function SessionStackScreen() {
+  return (
+    <SessionStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
+      <SessionStack.Screen name="SessionListScreen" component={SessionListScreen} options={{ title: 'Sessions' }} />
+      <SessionStack.Screen name="SessionScreen" component={SessionScreen} options={{ title: 'Session Details' }} />
+    </SessionStack.Navigator>
+  );
+}
+
+function ExercisesStackScreen() {
+  return (
+    <ExercisesStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#111' }, headerTintColor: '#fff' }}>
+      <ExercisesStack.Screen name="ExerciseListScreen" component={ExerciseListScreen} options={{ title: 'Exercises' }} />
+      <ExercisesStack.Screen name="ExerciseScreen" component={ExerciseScreen} options={{ title: 'Exercise Details' }} />
+      <ExercisesStack.Screen name="ExerciseForm" component={ExerciseFormScreen} options={{ headerShown: false }}
+      />
+    </ExercisesStack.Navigator>
+  );
+}
+
 export default function App() {
   const Tab = createBottomTabNavigator();
-
-
-  const HomeScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Home</Text></View>;
-  const SettingsScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Settings</Text></View>;
 
   return (
     <NavigationContainer>
